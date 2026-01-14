@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "input_or_output_check.h"
+#include <>
 
 int main() {
     char line[1024],operation;
