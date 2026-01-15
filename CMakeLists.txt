@@ -23,7 +23,10 @@ FetchContent_MakeAvailable(Catch2)
 
 # --- 2. Create a Library for shared logic ---
 # Instead of compiling calculator.cpp twice, we make it a library
-add_library(MathLib src/calculator.cpp)
+add_library(MathLib 
+    OBJECT
+    inc/math_func.h
+    src/math_func.cpp)
 target_include_directories(MathLib PUBLIC include)
 
 # --- 3. Main Application ---

@@ -1,4 +1,3 @@
-#include "input_or_output_check.h"
 #include <iostream>
 
 int main(void) {
@@ -10,12 +9,12 @@ int main(void) {
         if (!fgets(line, sizeof(line), stdin)) {
             break;
         }
-        if ((sscanf(line, "%lf %c %lf", &num1, &operation, &num2) == 3) &&
+        /*if ((sscanf(line, "%lf %c %lf", &num1, &operation, &num2) == 3) &&
             (input(num1) == 1 && input(num2) == 1)) {
             output(num1, operation, num2);
         } else {
             std::cout << ("Incorrect input, try again\n");
-        }
+        }*/
     }
     return 0;
 }
