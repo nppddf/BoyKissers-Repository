@@ -39,3 +39,17 @@ add_executable(${CMAKE_PROJECT_NAME} src/main.cpp)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE plus_lib)
 
 # --- 4. Testing Setup ---
+enable_testing()
+
+add_executable(unit_tests EXCLUDE_FROM_ALL tests/test_calculator.cpp)
+
+# Link the test to our logic AND the Catch2 library
+target_link_libraries(unit_tests PRIVATE plus_lib Catch2::Catch2WithMain)
+# Register the test with CTest
+add_test(NAME MyCalculatorTests COMMAND unit_tests)
+
+add_custom_target(run-tests
+  COMMAND $<TARGET_FILE:unit_tests>
+  DEPENDS unit_tests
+  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
