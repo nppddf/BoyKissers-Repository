@@ -1,0 +1,52 @@
+# .clang-format
+# Base style: LLVM with moderate customization for modern C++
+BasedOnStyle: LLVM
+Language: Cpp
+Standard: c++20
+
+# === Indentation & line length ===
+IndentWidth: 4              # Use 4 spaces per indentation level
+TabWidth: 4
+UseTab: Never               # Always use spaces
+ColumnLimit: 110            # Max line length
+
+# === Braces & short statements ===
+BreakBeforeBraces: Attach   # K&R / LLVM style braces
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: false
+
+# === Pointers & references ===
+PointerAlignment: Left      # int* ptr
+ReferenceAlignment: Pointer # int& ref
+
+# === Spaces ===
+SpaceBeforeParens: ControlStatements # if (...), while (...)
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+SpaceInEmptyParentheses: false
+SpacesInAngles: false
+
+# === Alignment ===
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: None
+AlignConsecutiveDeclarations: None
+AlignOperands: Align
+AlignTrailingComments: true
+
+# === Function calls & lists ===
+BinPackArguments: true
+BinPackParameters: true
+Cpp11BracedListStyle: true
+
+# === Includes ===
+SortIncludes: true          # Alphabetically sort includes
+IncludeBlocks: Regroup      # Regroup include blocks
+
+# === Constructors ===
+BreakConstructorInitializers: BeforeComma
+ConstructorInitializerIndentWidth: 4
+ContinuationIndentWidth: 8
+
+# === Comments ===
+ReflowComments: true        # Auto-wrap long comments
