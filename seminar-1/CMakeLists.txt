@@ -25,9 +25,9 @@ FetchContent_MakeAvailable(Catch2)
 # Instead of compiling calculator.cpp twice, we make it a library
 add_library(MathLib 
     OBJECT
-    inc/math_func.h
-    src/math_func.cpp)
-target_include_directories(MathLib PUBLIC include)
+    src/plus.cpp)
+    
+target_include_directories(MathLib PUBLIC inc)
 
 # --- 3. Main Application ---
 add_executable(MyApp src/main.cpp)
