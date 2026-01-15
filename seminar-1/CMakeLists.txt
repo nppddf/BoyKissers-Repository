@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(WorkshopX CXX)
+project(100_percentil)
 
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
@@ -23,14 +23,19 @@ FetchContent_MakeAvailable(Catch2)
 
 # --- 2. Create a Library for shared logic ---
 # Instead of compiling calculator.cpp twice, we make it a library
-add_library(MathLib 
+add_library( plus_lib 
     OBJECT
-    src/plus.cpp)
+        src/plus.cpp
+        inc/plus.h
+)
     
-target_include_directories(MathLib PUBLIC inc)
+target_include_directories( plus_lib
+  PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/inc
+)
 
 # --- 3. Main Application ---
-add_executable(MyApp src/main.cpp)
-target_link_libraries(MyApp PRIVATE MathLib)
+add_executable(${CMAKE_PROJECT_NAME} src/main.cpp)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE plus_lib)
 
 # --- 4. Testing Setup ---
