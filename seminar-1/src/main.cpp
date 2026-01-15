@@ -1,4 +1,4 @@
-#include "inc/plus.h"
+#include "plus.h"
 
 #include <iostream>
 

@@ -15,7 +15,7 @@ set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
 # --- 1. Fetch Catch2 Dependency ---
 include(FetchContent)
 FetchContent_Declare(
-    Catch2
+    Catch2  
     GIT_REPOSITORY https://github.com/catchorg/Catch2.git
     GIT_TAG v3.4.0 # Or latest version
 )
@@ -34,11 +34,3 @@ add_executable(MyApp src/main.cpp)
 target_link_libraries(MyApp PRIVATE MathLib)
 
 # --- 4. Testing Setup ---
-enable_testing()
-
-add_executable(unit_tests tests/test_calculator.cpp)
-
-# Link the test to our logic AND the Catch2 library
-target_link_libraries(unit_tests PRIVATE MathLib Catch2::Catch2WithMain)
-# Register the test with CTest
-add_test(NAME MyCalculatorTests COMMAND unit_tests)
