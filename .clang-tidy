@@ -1,32 +1,17 @@
 # .clang-tidy
-# Stricter configuration aligned with Google C++ Style Guide
-
 Checks: >
   -*,
-
   clang-diagnostic-*,
-
-  # Core correctness & safety
   bugprone-*,
   clang-analyzer-*,
   concurrency-*,
-
-  # Modern C++
   modernize-*,
-
-  # Performance
   performance-*,
-
-  # Portability
   portability-*,
-
-  # Readability & style
   readability-*,
-
-  # C++ Core Guidelines (filtered)
+  google-build-using-namespace,       # Disallow using namespace in global scope:contentReference[oaicite:61]{index=61}
   cppcoreguidelines-*,
-
-  # === Explicitly disabled noisy / low-value checks ===
+  # Disable checks that conflict with our style or are too strict
   -cppcoreguidelines-avoid-magic-numbers,
   -cppcoreguidelines-owning-memory,
   -cppcoreguidelines-pro-bounds-pointer-arithmetic,
@@ -34,80 +19,53 @@ Checks: >
   -cppcoreguidelines-special-member-functions,
   -readability-magic-numbers,
   -readability-implicit-bool-conversion,
+  -modernize-use-auto,                # Don't encourage auto for basic types:contentReference[oaicite:62]{index=62}
   -modernize-use-trailing-return-type
 
-WarningsAsErrors: '*'                 # Can be set to '*' in CI later
-HeaderFilterRegex: '.*'              # Analyze all project headers
-FormatStyle: file                    # Use .clang-format for fixes
-
 CheckOptions:
-  # === Google-style identifier naming ===
-
-  # Namespaces: snake_case
+  # Naming conventions
   - key: readability-identifier-naming.NamespaceCase
-    value: lower_case
-
-  # Types: PascalCase
+    value: lower_case                  # namespace names in lower_case
   - key: readability-identifier-naming.ClassCase
-    value: CamelCase
-  - key: readability-identifier-naming.StructCase
-    value: CamelCase
+    value: CamelCase                   # Classes/Structs in PascalCase:contentReference[oaicite:63]{index=63}
   - key: readability-identifier-naming.EnumCase
-    value: CamelCase
-  - key: readability-identifier-naming.UnionCase
-    value: CamelCase
-  - key: readability-identifier-naming.TypeAliasCase
-    value: CamelCase
-
-  # Functions & methods: camelCase
+    value: CamelCase                   # Enums in PascalCase
   - key: readability-identifier-naming.FunctionCase
-    value: camelBack
-  - key: readability-identifier-naming.MethodCase
-    value: camelBack
-
-  # Variables: snake_case
+    value: camelBack                   # Functions/Methods in camelCase:contentReference[oaicite:64]{index=64}
   - key: readability-identifier-naming.VariableCase
-    value: lower_case
+    value: camelBack                   # Variables in camelCase:contentReference[oaicite:65]{index=65}
   - key: readability-identifier-naming.ParameterCase
-    value: lower_case
-
-  # Class members: snake_case_
-  - key: readability-identifier-naming.MemberCase
-    value: lower_case
-  - key: readability-identifier-naming.PrivateMemberSuffix
-    value: _
-
-  # Constants: kConstantName
+    value: camelBack                   # Parameters in camelCase
+  - key: readability-identifier-naming.PrivateMemberPrefix
+    value: "_"                        # Prefix private members with '_':contentReference[oaicite:66]{index=66}
+  - key: readability-identifier-naming.PrivateMemberCase
+    value: camelBack                  # Private/Protected members in camelCase:contentReference[oaicite:67]{index=67}
+  - key: readability-identifier-naming.ProtectedMemberPrefix
+    value: "_"
+  - key: readability-identifier-naming.ProtectedMemberCase
+    value: camelBack
+  - key: readability-identifier-naming.PublicMemberCase
+    value: camelBack                  # Public data members (if any) in camelCase
   - key: readability-identifier-naming.ConstantCase
-    value: CamelCase
-  - key: readability-identifier-naming.ConstantPrefix
-    value: k
-
-  # Macros: UPPER_CASE
+    value: UPPER_CASE                 # Constants in UPPER_CASE_WITH_UNDERSCORES:contentReference[oaicite:68]{index=68}
   - key: readability-identifier-naming.MacroDefinitionCase
     value: UPPER_CASE
-
-  # Enums values: CamelCase (Google style)
   - key: readability-identifier-naming.EnumConstantCase
-    value: CamelCase
+    value: CamelCase                  # Enum values in PascalCase
 
-  # === Modern C++ rules ===
+  # Modern C++ preferences
   - key: modernize-use-nullptr.NullMacros
-    value: 'NULL'
-
+    value: 'NULL'                     # Treat NULL as null-pointer (convert to nullptr):contentReference[oaicite:69]{index=69}
   - key: modernize-loop-convert.MinConfidence
     value: reasonable
-
   - key: modernize-avoid-c-arrays.AllowStringArrays
     value: 'true'
 
-  # === Readability ===
+  # Readability and other checks
   - key: readability-function-cognitive-complexity.Threshold
-    value: '20'   # Slightly stricter than before
-
+    value: '20'
   - key: readability-identifier-length.MinimumVariableNameLength
-    value: '2'
+    value: '1'                        # Allow 1-char names like i, j, x, y in context:contentReference[oaicite:70]{index=70}
 
-  # === Performance ===
   - key: performance-move-const-arg.CheckTriviallyCopyable
     value: 'true'

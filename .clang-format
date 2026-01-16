@@ -1,27 +1,28 @@
 # .clang-format
-# Base style: LLVM with moderate customization for modern C++
-BasedOnStyle: LLVM
+# Base style: Google with adaptations for course code style
+BasedOnStyle: Google
 Language: Cpp
 Standard: c++20
 
 # === Indentation & line length ===
-IndentWidth: 4              # Use 4 spaces per indentation level
+IndentWidth: 4              # 4 spaces indent (no tabs):contentReference[oaicite:56]{index=56}
 TabWidth: 4
-UseTab: Never               # Always use spaces
-ColumnLimit: 110            # Max line length
+UseTab: Never               # Always use spaces:contentReference[oaicite:57]{index=57}
+NamespaceIndentation: None  # Don't indent inside namespaces:contentReference[oaicite:58]{index=58}
+ColumnLimit: 110            # Max line width 110 chars
 
 # === Braces & short statements ===
-BreakBeforeBraces: Attach   # K&R / LLVM style braces
+BreakBeforeBraces: Allman   # Opening brace on new line (Allman style):contentReference[oaicite:59]{index=59}
 AllowShortIfStatementsOnASingleLine: Never
 AllowShortLoopsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: false
 
 # === Pointers & references ===
-PointerAlignment: Left      # int* ptr
-ReferenceAlignment: Pointer # int& ref
+PointerAlignment: Left      # Attach '*' to type (e.g. int* ptr):contentReference[oaicite:60]{index=60}
+ReferenceAlignment: Pointer # Align '&' like pointers (e.g. int& ref)
 
 # === Spaces ===
-SpaceBeforeParens: ControlStatements # if (...), while (...)
+SpaceBeforeParens: ControlStatements   # Space before '(' in if/for/while
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
 SpaceInEmptyParentheses: false
@@ -29,7 +30,7 @@ SpacesInAngles: false
 
 # === Alignment ===
 AlignAfterOpenBracket: Align
-AlignConsecutiveAssignments: None
+AlignConsecutiveAssignments: Consecutive   # Align consecutive assignment operators
 AlignConsecutiveDeclarations: None
 AlignOperands: Align
 AlignTrailingComments: true
@@ -40,8 +41,8 @@ BinPackParameters: true
 Cpp11BracedListStyle: true
 
 # === Includes ===
-SortIncludes: true          # Alphabetically sort includes
-IncludeBlocks: Regroup      # Regroup include blocks
+SortIncludes: true            # Sort includes alphabetically
+IncludeBlocks: Regroup        # Group includes (system vs project)
 
 # === Constructors ===
 BreakConstructorInitializers: BeforeComma
@@ -49,4 +50,4 @@ ConstructorInitializerIndentWidth: 4
 ContinuationIndentWidth: 8
 
 # === Comments ===
-ReflowComments: true        # Auto-wrap long comments
+ReflowComments: true          # Wrap long comments automatically
