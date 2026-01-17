@@ -1,25 +1,28 @@
 #include <iostream>
 #include <limits>
+#include <string>
 
-#include "plus.h"
+#include "function_parser.h"
 
 int main()
 {
-    std::cout << "Summator - enter two integer numbers:\n";
+    std::cout << "Function Calculator - enter function (sin(x), cos(x), e^x):\n";
 
-    long long firstNumber  = 0;
-    long long secondNumber = 0;
-    while (true)
+    std::string input;
+    while (std::getline(std::cin, input))
     {
-        if (!(std::cin >> firstNumber >> secondNumber))
-        {
-            std::cout << "Invalid input. Please enter two integers.\n";
-
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        if (input.empty()) {
             continue;
         }
 
-        std::cout << sum(firstNumber, secondNumber) << "\n";
+        ParseResult result = parseFunction(input);
+
+        if (!result.success) {
+            std::cout << "Invalid input. Please enter sin(x), cos(x), or e^x, where x is a number.\n";
+            continue;
+        }
+
+        double calculated = calculateFunction(result.type, result.value);
+        std::cout << calculated << "\n";
     }
 }

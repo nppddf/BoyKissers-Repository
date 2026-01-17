@@ -26,7 +26,9 @@ FetchContent_MakeAvailable(Catch2)
 add_library( plus_lib 
     OBJECT
         src/plus.cpp
+        src/function_parser.cpp
         inc/plus.h
+        inc/function_parser.h
 )
     
 target_include_directories( plus_lib
@@ -34,9 +36,12 @@ target_include_directories( plus_lib
     ${CMAKE_CURRENT_SOURCE_DIR}/inc
 )
 
+# Link math library for sin, cos, exp functions
+target_link_libraries( plus_lib PUBLIC m )
+
 # --- 3. Main Application ---
 add_executable(${CMAKE_PROJECT_NAME} src/main.cpp)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE plus_lib)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE plus_lib m)
 
 # --- 4. Testing Setup ---
 enable_testing()
