@@ -1,0 +1,5 @@
+{
+    "C_Cpp.codeAnalysis.clangTidy.checks.disabled": [
+        "modernize-use-trailing-return-type"
+    ]
+}

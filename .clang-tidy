@@ -11,7 +11,7 @@ Checks: >
   readability-*,
   google-build-using-namespace,       # Disallow using namespace in global scope:contentReference[oaicite:61]{index=61}
   cppcoreguidelines-*,
-  # Disable checks that conflict with our style or are too strict
+  # Disable checks that confclict with our style or are too strict
   -cppcoreguidelines-avoid-magic-numbers,
   -cppcoreguidelines-owning-memory,
   -cppcoreguidelines-pro-bounds-pointer-arithmetic,
@@ -21,6 +21,7 @@ Checks: >
   -readability-implicit-bool-conversion,
   -modernize-use-auto,                # Don't encourage auto for basic types:contentReference[oaicite:62]{index=62}
   -modernize-use-trailing-return-type
+  
 
 CheckOptions:
   # Naming conventions

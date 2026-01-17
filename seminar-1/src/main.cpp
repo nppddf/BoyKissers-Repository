@@ -1,15 +1,18 @@
-#include "plus.h"
-
 #include <iostream>
 #include <limits>
 
-int main(void) {
+#include "plus.h"
+
+int main()
+{
     std::cout << "Summator - enter two integer numbers:\n";
 
-    long long first_number = 0;
-    long long second_number = 0;
-    while (true) {
-        if (!(std::cin >> first_number >> second_number)) {
+    long long firstNumber  = 0;
+    long long secondNumber = 0;
+    while (true)
+    {
+        if (!(std::cin >> firstNumber >> secondNumber))
+        {
             std::cout << "Invalid input. Please enter two integers.\n";
 
             std::cin.clear();
@@ -17,6 +20,6 @@ int main(void) {
             continue;
         }
 
-        std::cout << sum(first_number, second_number) << "\n";
+        std::cout << sum(firstNumber, secondNumber) << "\n";
     }
 }
