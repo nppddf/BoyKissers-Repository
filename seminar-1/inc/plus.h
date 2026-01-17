@@ -1,3 +1,3 @@
 #pragma once
 
-long long sum(long long first_number, long long second_number);
+long long sum(long long firstNumber, long long secondNumber);
