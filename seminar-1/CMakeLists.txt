@@ -22,26 +22,23 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(Catch2)
 
 # --- 2. Create a Library for shared logic ---
-# Instead of compiling calculator.cpp twice, we make it a library
-add_library( plus_lib 
+add_library( function_parser_lib 
     OBJECT
-        src/plus.cpp
         src/function_parser.cpp
-        inc/plus.h
         inc/function_parser.h
 )
     
-target_include_directories( plus_lib
+target_include_directories( function_parser_lib
   PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/inc
 )
 
 # Link math library for sin, cos, exp functions
-target_link_libraries( plus_lib PUBLIC m )
+target_link_libraries( function_parser_lib PUBLIC m )
 
 # --- 3. Main Application ---
 add_executable(${CMAKE_PROJECT_NAME} src/main.cpp)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE plus_lib m)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE function_parser_lib m)
 
 # --- 4. Testing Setup ---
 enable_testing()
@@ -49,9 +46,9 @@ enable_testing()
 add_executable(unit_tests EXCLUDE_FROM_ALL tests/test_calculator.cpp)
 
 # Link the test to our logic AND the Catch2 library
-target_link_libraries(unit_tests PRIVATE plus_lib Catch2::Catch2WithMain)
+target_link_libraries(unit_tests PRIVATE function_parser_lib Catch2::Catch2WithMain)
 # Register the test with CTest
-add_test(NAME MyCalculatorTests COMMAND unit_tests)
+add_test(NAME FunctionParserTests COMMAND unit_tests)
 
 add_custom_target(run-tests
   COMMAND $<TARGET_FILE:unit_tests>
