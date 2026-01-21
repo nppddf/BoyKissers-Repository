@@ -1,4 +1,7 @@
 ## Build
+
+
+
 ````
 cmake -S . -B build # only first time for configuration
 cmake --build build # do this each time you need to build
@@ -8,6 +11,8 @@ cmake --build build # do this each time you need to build
 ````
 ./build/100_percentil
 ````
+
+
 
 ## Unit-Testing
 ````
