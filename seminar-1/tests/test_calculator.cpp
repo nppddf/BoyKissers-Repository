@@ -2,6 +2,7 @@
 #include "plus.h"
 
 TEST_CASE("sum of positive numbers") {
+    REQUIRE(sum(5, 47) == 52);
     REQUIRE(sum(1, 2) == 3);
     REQUIRE(sum(10, 20) == 30);
     REQUIRE(sum(24082007, 16032007) == 40114014);
