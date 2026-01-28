@@ -7,7 +7,7 @@
 #include <sstream>
 #include <stdexcept>
 
-static bool is_letter(wchar_t ch)
+bool is_letter(wchar_t ch)
 {
     return std::iswalpha(ch) != 0;
 }
@@ -48,7 +48,7 @@ std::wstring to_upper(const std::wstring& input)
     return result;
 }
 
-static std::wstring word_capitalize(const std::wstring& word)
+std::wstring word_capitalize(const std::wstring& word)
 {
     if (word.empty())
     {
