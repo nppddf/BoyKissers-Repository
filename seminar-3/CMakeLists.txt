@@ -1,27 +1,48 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(fio_formatter VERSION 1.0 LANGUAGES CXX)
+project(100_percentil)
 
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
-endif()
+endif(NOT CMAKE_BUILD_TYPE)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -Werror=return-type")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
 
-add_library(fio_lib
+include(FetchContent)
+FetchContent_Declare(
+    Catch2  
+    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+    GIT_TAG v3.4.0
+)
+FetchContent_MakeAvailable(Catch2)
+
+add_library(po_batiushke_lib
     OBJECT
         src/name_utils.cpp
         inc/name_utils.h
 )
 
-target_include_directories(fio_lib
+target_include_directories(po_batiushke_lib
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/inc
 )
 
 add_executable(${CMAKE_PROJECT_NAME} src/main.cpp)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE fio_lib)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE po_batiushke_lib)
+
+
+#enable_testing()
+#add_executable(unit_tests EXCLUDE_FROM_ALL tests/test_calculator.cpp)
+
+#target_link_libraries(unit_tests PRIVATE plus_lib Catch2::Catch2WithMain)
+
+#add_test(NAME MyCalculatorTests COMMAND unit_tests)
+
+#add_custom_target(run-tests
+#  COMMAND $<TARGET_FILE:unit_tests>
+#  DEPENDS unit_tests
+#  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+#)
