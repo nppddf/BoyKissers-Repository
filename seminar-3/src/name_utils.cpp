@@ -23,7 +23,7 @@ static bool is_letter(wchar_t ch) {
 
 bool is_valid_fio_characters(const std::wstring& input) {
     for (wchar_t ch : input) {
-        if (ch == L' ' || ch == L'-')
+        if (ch == L' ')
             continue;
         if (!is_letter(ch))
             return false;
@@ -41,7 +41,7 @@ std::vector<std::wstring> split_fio(const std::wstring& input) {
     }
 
     if (parts.size() != 3) {
-        throw std::runtime_error("Ожидается ввод ровно из трёх слов: фамилия, имя, отчество.");
+        throw std::runtime_error("Expected three words: surname, name, patronymic.");
     }
 
     return parts;

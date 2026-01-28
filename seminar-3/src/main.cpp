@@ -7,7 +7,7 @@
 int main() {
     setup_russian_locale();
 
-    std::wcout << L"Введите ваше полное ФИО (фамилия имя отчество) кириллицей: " << std::endl;
+    std::wcout << L"Введите ваше полное ФИО (Фамилия Имя Отчество): " << std::endl;
 
     std::wstring input;
     std::getline(std::wcin, input);
@@ -36,8 +36,8 @@ int main() {
         std::wcout << upper_all << std::endl;
         std::wcout << capitalized << std::endl;
         std::wcout << short_form << std::endl;
-    } catch (const std::exception& ex) {
-        std::wcout << L"Ошибка: " << ex.what() << std::endl;
+    } catch (const std::exception&) {
+        std::wcout << L"Ошибка: некорректный формат ФИО. Нужно ввести три слова: фамилию, имя и отчество." << std::endl;
         return 1;
     }
 
