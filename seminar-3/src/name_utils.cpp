@@ -16,7 +16,7 @@ bool is_valid_fio_characters(const std::wstring& input)
 {
     for (wchar_t ch : input)
     {
-        if (ch == L' ' || ch == L'-')
+        if (ch == L' ')
             continue;
         if (!is_letter(ch))
             return false;
