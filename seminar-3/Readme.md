@@ -1,50 +1,85 @@
-## Описание
+# Seminar 3 - FIO Formatter
 
-Программа запрашивает у пользователя полное ФИО (фамилия, имя, отчество) кириллицей,
-проверяет корректность введённых символов и выводит ФИО в трёх форматах:
+A small command-line utility that reads a full name (Фамилия Имя Отчество), validates the input, and prints it in
+multiple formats. This project demonstrates basic wide-string processing in C++, CMake configuration, and unit testing
+with Catch2.
 
-1. **Все буквы заглавные** — `ФАМИЛИЯ ИМЯ ОТЧЕСТВО`.
-2. **Каждое слово с заглавной буквы** — `Фамилия Имя Отчество`.
-3. **Краткая форма** — `Фамилия И. О.`.
+## Features
 
-Если во вводе есть символы, отличные от букв, пробелов или дефисов, программа сообщит об ошибке.
+- **Input validation**: Allows only letters and spaces in the entered full name
+- **Formatting**:
+  - UPPERCASE: `ФАМИЛИЯ ИМЯ ОТЧЕСТВО`
+  - Capitalized words: `Фамилия Имя Отчество`
+  - Short form: `Фамилия И. О.`
+- **Modular design**: Core logic is built as a library and reused by both the app and tests
+- **Unit testing**: Catch2-based test suite for parsing and formatting
 
-Код разделён на модули:
+## Project Structure
 
-- `src/main.cpp` — точка входа, работа с вводом/выводом.
-- `inc/name_utils.h`, `src/name_utils.cpp` — функции обработки строк ФИО.
+```
+seminar-3/
+├── CMakeLists.txt            # CMake build configuration
+├── Readme.md                 # This file
+├── inc/                      # Header files
+│   └── name_utils.h          # Name utilities declarations
+├── src/                      # Source files
+│   ├── main.cpp              # Main application entry point
+│   └── name_utils.cpp        # Name utilities implementation
+└── tests/                    # Test files
+    └── test_name_utils.cpp   # Unit tests using Catch2
+```
 
-## Сборка
+## Requirements
 
-Требуется CMake (не ниже 3.5) и компилятор с поддержкой C++17.
+- **CMake** (version 3.5 or higher)
+- **C++ compiler** with C++17 support (GCC, Clang, or MSVC)
+- **Git** (for fetching Catch2 dependency)
+
+## Dependencies
+
+The project automatically fetches **Catch2** (v3.4.0) via CMake `FetchContent`. No manual installation required.
+
+## Build
+
+### Initial Configuration
 
 ```bash
-cd seminar-3
-mkdir -p build
-cd build
-cmake ..
-cmake --build .
+cmake -S . -B build
 ```
 
-После сборки исполняемый файл будет находиться в каталоге `build/bin` и называться `fio_formatter`.
-
-## Запуск
-
-Из каталога `build` (или указывая полный путь к бинарнику):
+### Compilation
 
 ```bash
-./bin/fio_formatter
+cmake --build build
 ```
 
-Пример работы:
+This will create:
+- `build/100_percentil` - The main executable
+- `build/unit_tests` - The test executable
 
-```text
-Введите ваше полное ФИО (фамилия имя отчество) кириллицей:
-иванов иван иванович
+## Run
 
-Варианты записи ФИО:
-ИВАНОВ ИВАН ИВАНОВИЧ
-Иванов Иван Иванович
-Иванов И. И.
+```bash
+./build/100_percentil
 ```
+
+The program will prompt you for full name input and print three formatting variants.
+
+## Unit Testing
+
+Run the test suite:
+
+```bash
+cmake --build build --target run-tests
+```
+
+All tests are based on Catch2 and are executed via the `run-tests` target (also registered in CTest as
+`NameUtilsTests`).
+
+## Architecture
+
+The project follows a modular design:
+- **Library module** (`po_batiushke_lib`): contains the core name formatting logic
+- **Main application**: links against the library to provide the CLI interface
+- **Test suite**: links against the same library to test logic without code duplication
 

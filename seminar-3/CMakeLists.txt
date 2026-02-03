@@ -34,15 +34,16 @@ add_executable(${CMAKE_PROJECT_NAME} src/main.cpp)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE po_batiushke_lib)
 
 
-#enable_testing()
-#add_executable(unit_tests EXCLUDE_FROM_ALL tests/test_calculator.cpp)
+# --- 4. Testing Setup ---
+enable_testing()
 
-#target_link_libraries(unit_tests PRIVATE plus_lib Catch2::Catch2WithMain)
+add_executable(unit_tests EXCLUDE_FROM_ALL tests/test_name_utils.cpp)
 
-#add_test(NAME MyCalculatorTests COMMAND unit_tests)
+target_link_libraries(unit_tests PRIVATE po_batiushke_lib Catch2::Catch2WithMain)
+add_test(NAME NameUtilsTests COMMAND unit_tests)
 
-#add_custom_target(run-tests
-#  COMMAND $<TARGET_FILE:unit_tests>
-#  DEPENDS unit_tests
-#  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-#)
+add_custom_target(run-tests
+  COMMAND $<TARGET_FILE:unit_tests>
+  DEPENDS unit_tests
+  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)

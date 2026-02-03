@@ -6,10 +6,14 @@
 
 int main()
 {
+    std::locale::global(std::locale(""));
+    std::wcin.imbue(std::locale());
+    std::wcout.imbue(std::locale());
+
     std::wcout << L"Введите ваше полное ФИО (Фамилия Имя Отчество): " << std::endl;
     std::wstring input;
     std::getline(std::wcin, input);
-    if (!is_valid_fio_characters(input))
+    if (!name_utils::isValidFioCharacters(input))
     {
         std::wcout << L"Ошибка: ФИО должно содержать только буквы, пробелы." << std::endl;
         std::wcout << L"Введите ФИО заново" << std::endl;
@@ -18,19 +22,19 @@ int main()
 
     try
     {
-        auto parts                     = split_fio(input);
+        auto parts                     = name_utils::splitFio(input);
         const std::wstring& surname    = parts[0];
         const std::wstring& name       = parts[1];
         const std::wstring& patronymic = parts[2];
-        
-        std::wstring upper_all         = to_upper(surname + L" " + name + L" " + patronymic);
-        std::wstring capitalized       = capitalize_words(surname + L" " + name + L" " + patronymic);
-        std::wstring short_form        = format_short_fio(surname, name, patronymic);
+
+        std::wstring upperAll    = name_utils::toUpper(surname + L" " + name + L" " + patronymic);
+        std::wstring capitalized = name_utils::capitalizeWords(surname + L" " + name + L" " + patronymic);
+        std::wstring shortForm   = name_utils::formatShortFio(surname, name, patronymic);
 
         std::wcout << L"\nВарианты записи вашего ФИО:" << std::endl;
-        std::wcout << upper_all << std::endl;
+        std::wcout << upperAll << std::endl;
         std::wcout << capitalized << std::endl;
-        std::wcout << short_form << std::endl;
+        std::wcout << shortForm << std::endl;
     }
     catch (const std::exception&)
     {
