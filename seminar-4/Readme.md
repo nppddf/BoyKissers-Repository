@@ -1,85 +1,63 @@
-# Seminar 4 - Text Utils
+# Seminar 4 – 2D Kadane (Maximum Sum Submatrix)
 
-A small command-line utility that reads a full name (Фамилия Имя Отчество), validates the input, and prints it in
-multiple formats. This project demonstrates basic wide-string processing in C++, CMake configuration, and unit testing
-with Catch2.
+This project solves the problem of finding a submatrix with the maximum sum of elements in an integer matrix
+using the two-dimensional Kadane algorithm (reduction to a one-dimensional problem).
 
-## Features
+## Task
 
-- **Input validation**: Allows only letters and spaces in the entered full name
-- **Formatting**:
-  - UPPERCASE: `ФАМИЛИЯ ИМЯ ОТЧЕСТВО`
-  - Capitalized words: `Фамилия Имя Отчество`
-  - Short form: `Фамилия И. О.`
-- **Modular design**: Core logic is built as a library and reused by both the app and tests
-- **Unit testing**: Catch2-based test suite for parsing and formatting
+For an integer matrix \(M \times N\), find the submatrix with the maximum sum of elements.
+
+Required functions:
+
+- `std::vector<std::vector<int>> readMatrix()` — reads a matrix of arbitrary size from standard input
+- `int maxSubarraySum(const std::vector<int>& row)` — one-dimensional Kadane algorithm
+- `std::tuple<int, int, int, int, int> maxSumSubmatrix(const std::vector<std::vector<int>>& m)` —
+  returns coordinates of the submatrix and its sum `(r1, c1, r2, c2, sum)`
+- `void printSubmatrix(const std::vector<std::vector<int>>& m, int r1, int c1, int r2, int c2)` —
+  prints the found submatrix
+
+The implementation correctly handles matrices containing negative numbers.
 
 ## Project Structure
 
 ```
 seminar-4/
-├── CMakeLists.txt            # CMake build configuration
-├── Readme.md                 # This file
-├── inc/                      # Header files
-│   └── name_utils.h          # Name utilities declarations
-├── src/                      # Source files
-│   ├── main.cpp              # Main application entry point
-│   └── name_utils.cpp        # Name utilities implementation
-└── tests/                    # Test files
-    └── test_name_utils.cpp   # Unit tests using Catch2
+├── CMakeLists.txt
+├── Readme.md
+├── inc/
+│   └── name_utils.h        # declarations of the required functions
+├── src/
+│   ├── main.cpp            # console interface
+│   └── name_utils.cpp      # implementation of algorithms
+└── tests/
+    └── test_name_utils.cpp # (not used in this seminar)
 ```
-
-## Requirements
-
-- **CMake** (version 3.5 or higher)
-- **C++ compiler** with C++17 support (GCC, Clang, or MSVC)
-- **Git** (for fetching Catch2 dependency)
-
-## Dependencies
-
-The project automatically fetches **Catch2** (v3.4.0) via CMake `FetchContent`. No manual installation required.
 
 ## Build
 
-### Initial Configuration
-
 ```bash
 cmake -S . -B build
-```
-
-### Compilation
-
-```bash
 cmake --build build
 ```
-
-This will create:
-- `build/text_utils` - The main executable
-- `build/unit_tests` - The test executable
 
 ## Run
 
 ```bash
-./build/text_utils
+./build/max_sum_submatrix
 ```
 
-The program will prompt you for full name input and print three formatting variants.
+Input format:
 
-## Unit Testing
+1. Two integers `rows` and `cols`
+2. `rows * cols` integers — the elements of the matrix by rows
 
-Run the test suite:
+Example:
 
-```bash
-cmake --build build --target run-tests
+```text
+3 4
+1 2 -1 -4
+-8 3 4 2
+3 8 10 -8
 ```
 
-All tests are based on Catch2 and are executed via the `run-tests` target (also registered in CTest as
-`NameUtilsTests`).
-
-## Architecture
-
-The project follows a modular design:
-- **Library module** (`text_utils_lib`): contains the core name formatting logic
-- **Main application**: links against the library to provide the CLI interface
-- **Test suite**: links against the same library to test logic without code duplication
-
+The program prints the maximum sum, the coordinates of the submatrix and the submatrix itself.
