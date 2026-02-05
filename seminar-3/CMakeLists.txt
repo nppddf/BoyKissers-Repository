@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(100_percentil)
+project(text_utils)
 
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
@@ -19,19 +19,19 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(Catch2)
 
-add_library(po_batiushke_lib
+add_library(text_utils_lib
     OBJECT
         src/name_utils.cpp
         inc/name_utils.h
 )
 
-target_include_directories(po_batiushke_lib
+target_include_directories(text_utils_lib
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/inc
 )
 
 add_executable(${CMAKE_PROJECT_NAME} src/main.cpp)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE po_batiushke_lib)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE text_utils_lib)
 
 
 # --- 4. Testing Setup ---
@@ -39,7 +39,7 @@ enable_testing()
 
 add_executable(unit_tests EXCLUDE_FROM_ALL tests/test_name_utils.cpp)
 
-target_link_libraries(unit_tests PRIVATE po_batiushke_lib Catch2::Catch2WithMain)
+target_link_libraries(unit_tests PRIVATE text_utils_lib Catch2::Catch2WithMain)
 add_test(NAME NameUtilsTests COMMAND unit_tests)
 
 add_custom_target(run-tests

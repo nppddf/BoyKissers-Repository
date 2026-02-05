@@ -1,4 +1,4 @@
-# Seminar 3 - FIO Formatter
+# Seminar 3 - Text Utils
 
 A small command-line utility that reads a full name (Фамилия Имя Отчество), validates the input, and prints it in
 multiple formats. This project demonstrates basic wide-string processing in C++, CMake configuration, and unit testing
@@ -54,13 +54,13 @@ cmake --build build
 ```
 
 This will create:
-- `build/100_percentil` - The main executable
+- `build/text_utils` - The main executable
 - `build/unit_tests` - The test executable
 
 ## Run
 
 ```bash
-./build/100_percentil
+./build/text_utils
 ```
 
 The program will prompt you for full name input and print three formatting variants.
@@ -79,7 +79,7 @@ All tests are based on Catch2 and are executed via the `run-tests` target (also 
 ## Architecture
 
 The project follows a modular design:
-- **Library module** (`po_batiushke_lib`): contains the core name formatting logic
+- **Library module** (`text_utils_lib`): contains the core name formatting logic
 - **Main application**: links against the library to provide the CLI interface
 - **Test suite**: links against the same library to test logic without code duplication
 
