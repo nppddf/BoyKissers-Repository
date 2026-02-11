@@ -5,13 +5,14 @@
 TEST_CASE("maxSumSubmatrix finds the best submatrix in a mixed matrix")
 {
     std::vector<std::vector<int>> matrix = {
-            {1, 2, -1, -4, -20},
-            {-8, -3, 4, 2, 1},
-            {3, 8, 10, 1, 3},
-            {-4, -1, 1, 7, -6},
+        {1, 2, -1, -4, -20},
+        {-8, -3, 4, 2, 1},
+        {3, 8, 10, 1, 3},
+        {-4, -1, 1, 7, -6},
     };
 
-    auto [topRow, leftCol, bottomRow, rightCol, bestSum] = kadane::maxSumSubmatrix(matrix);
+    auto [topRow, leftCol, bottomRow, rightCol, bestSum] =
+        kadane::maxSumSubmatrix(matrix);
 
     REQUIRE(bestSum == 29);
     REQUIRE(topRow == 1);
@@ -23,11 +24,12 @@ TEST_CASE("maxSumSubmatrix finds the best submatrix in a mixed matrix")
 TEST_CASE("maxSumSubmatrix handles all-negative matrices")
 {
     std::vector<std::vector<int>> matrix = {
-            {-1, -2},
-            {-3, -4},
+        {-1, -2},
+        {-3, -4},
     };
 
-    auto [topRow, leftCol, bottomRow, rightCol, bestSum] = kadane::maxSumSubmatrix(matrix);
+    auto [topRow, leftCol, bottomRow, rightCol, bestSum] =
+        kadane::maxSumSubmatrix(matrix);
 
     REQUIRE(bestSum == -1);
     REQUIRE(topRow == 0);

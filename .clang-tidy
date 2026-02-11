@@ -1,72 +1,178 @@
-# .clang-tidy
+HeaderFilterRegex: ''
 Checks: >
   -*,
-  clang-diagnostic-*,
-  bugprone-*,
-  clang-analyzer-*,
-  concurrency-*,
-  modernize-*,
-  performance-*,
-  portability-*,
-  readability-*,
-  google-build-using-namespace,       # Disallow using namespace in global scope:contentReference[oaicite:61]{index=61}
-  cppcoreguidelines-*,
-  # Disable checks that confclict with our style or are too strict
-  -cppcoreguidelines-avoid-magic-numbers,
-  -cppcoreguidelines-owning-memory,
-  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
-  -cppcoreguidelines-pro-type-reinterpret-cast,
-  -cppcoreguidelines-special-member-functions,
-  -readability-magic-numbers,
-  -readability-implicit-bool-conversion,
-  -modernize-use-auto,                # Don't encourage auto for basic types:contentReference[oaicite:62]{index=62}
-  -modernize-use-trailing-return-type
-  
+  modernize-avoid-c-style-cast,
+  cppcoreguidelines-pro-type-cstyle-cast,
+  readability-identifier-naming,
+  readability-identifier-length,
+  portability-avoid-pragma-once,
+  google-build-using-namespace,
+  cppcoreguidelines-no-malloc,
+  clang-analyzer-core.NullDereference,
+  cppcoreguidelines-macro-to-enum,
+  modernize-use-auto,
+  misc-header-include-cycle
 
 CheckOptions:
-  # Naming conventions
-  - key: readability-identifier-naming.NamespaceCase
-    value: lower_case                  # namespace names in lower_case
-  - key: readability-identifier-naming.ClassCase
-    value: CamelCase                   # Classes/Structs in PascalCase:contentReference[oaicite:63]{index=63}
-  - key: readability-identifier-naming.EnumCase
-    value: CamelCase                   # Enums in PascalCase
-  - key: readability-identifier-naming.FunctionCase
-    value: camelBack                   # Functions/Methods in camelCase:contentReference[oaicite:64]{index=64}
-  - key: readability-identifier-naming.VariableCase
-    value: camelBack                   # Variables in camelCase:contentReference[oaicite:65]{index=65}
-  - key: readability-identifier-naming.ParameterCase
-    value: camelBack                   # Parameters in camelCase
-  - key: readability-identifier-naming.PrivateMemberPrefix
-    value: "_"                        # Prefix private members with '_':contentReference[oaicite:66]{index=66}
-  - key: readability-identifier-naming.PrivateMemberCase
-    value: camelBack                  # Private/Protected members in camelCase:contentReference[oaicite:67]{index=67}
-  - key: readability-identifier-naming.ProtectedMemberPrefix
-    value: "_"
-  - key: readability-identifier-naming.ProtectedMemberCase
-    value: camelBack
-  - key: readability-identifier-naming.PublicMemberCase
-    value: camelBack                  # Public data members (if any) in camelCase
-  - key: readability-identifier-naming.ConstantCase
-    value: UPPER_CASE                 # Constants in UPPER_CASE_WITH_UNDERSCORES:contentReference[oaicite:68]{index=68}
-  - key: readability-identifier-naming.MacroDefinitionCase
-    value: UPPER_CASE
-  - key: readability-identifier-naming.EnumConstantCase
-    value: CamelCase                  # Enum values in PascalCase
 
-  # Modern C++ preferences
-  - key: modernize-use-nullptr.NullMacros
-    value: 'NULL'                     # Treat NULL as null-pointer (convert to nullptr):contentReference[oaicite:69]{index=69}
-  - key: modernize-loop-convert.MinConfidence
-    value: reasonable
-  - key: modernize-avoid-c-arrays.AllowStringArrays
-    value: 'true'
+  ######################
+  # Identifiers length #
+  ######################
+  
+  - key:          readability-identifier-length.MinimumVariableNameLength
+    value:        '3'
+  - key:          readability-identifier-length.IgnoredVariableNames
+    value:        '^(i|j|k|it)$'
 
-  # Readability and other checks
-  - key: readability-function-cognitive-complexity.Threshold
-    value: '20'
-  - key: readability-identifier-length.MinimumVariableNameLength
-    value: '1'                        # Allow 1-char names like i, j, x, y in context:contentReference[oaicite:70]{index=70}
 
-  - key: performance-move-const-arg.CheckTriviallyCopyable
-    value: 'true'
+  #############
+  # camelBack #
+  #############
+
+  # Vars 
+  - key:            readability-identifier-naming.VariableCase
+    value:          camelBack
+  - key:            readability-identifier-naming.StaticVariableCase
+    value:          camelBack
+  - key:            readability-identifier-naming.GlobalVariableCase
+    value:          camelBack
+  - key:            readability-identifier-naming.LocalVariableCase
+    value:          camelBack
+
+  # Pointers/References
+  - key:            readability-identifier-naming.PointerVariableCase
+    value:          camelBack
+  - key:            readability-identifier-naming.ReferenceVariableCase
+    value:          camelBack
+
+  # Funcs
+  - key:            readability-identifier-naming.FunctionCase
+    value:          camelBack 
+  - key:            readability-identifier-naming.ParameterCase
+    value:          camelBack
+
+
+  # Class members
+  - key:            readability-identifier-naming.MemberCase
+    value:          camelBack
+  - key:            readability-identifier-naming.PrivateMemberCase
+    value:          camelBack
+  - key:            readability-identifier-naming.ProtectedMemberCase
+    value:          camelBack
+
+
+  # Class methods
+  - key:            readability-identifier-naming.ClassMethodCase
+    value:          camelBack
+
+  - key:            readability-identifier-naming.ConstMethodCase
+    value:          camelBack
+  - key:            readability-identifier-naming.NonConstMethodCase
+    value:          camelBack
+
+  - key:            readability-identifier-naming.PublicMethodCase
+    value:          camelBack
+  - key:            readability-identifier-naming.ProtectedMethodCase
+    value:          camelBack
+  - key:            readability-identifier-naming.PrivateMethodCase
+    value:          camelBack
+
+  - key:          readability-identifier-naming.StaticMethodCase
+    value:        camelBack
+
+  - key:          readability-identifier-naming.VirtualMethodCase
+    value:        camelBack
+
+  # Getter/Setter
+  - key:          readability-identifier-naming.GetterCase
+    value:        camelBack  
+  - key:          readability-identifier-naming.SetterCase
+    value:        camelBack  
+
+  #############
+  # CamelCase #
+  #############
+
+  # Namespaces
+  - key:            readability-identifier-naming.NamespaceCase
+    value:          CamelCase
+
+  # Constructors/Destructors
+  - key:            readability-identifier-naming.ConstructorCase
+    value:          CamelCase  
+  - key:            readability-identifier-naming.DestructorCase
+    value:          CamelCase  
+
+  # Concept and template parameters
+
+  - key:            readability-identifier-naming.TemplateParameterCase
+    value:          CamelCase  
+  - key:            readability-identifier-naming.ConceptParameterCase
+    value:          CamelCase
+
+  # Data types
+  - key:            readability-identifier-naming.ClassCase
+    value:          CamelCase
+  - key:            readability-identifier-naming.StructCase
+    value:          CamelCase
+  - key:            readability-identifier-naming.EnumCase
+    value:          CamelCase
+  - key:            readability-identifier-naming.UnionCase
+    value:          CamelCase
+  - key:            readability-identifier-naming.TypedefCase
+    value:          CamelCase
+  - key:            readability-identifier-naming.TypeAliasCase
+    value:          CamelCase
+  - key:            readability-identifier-naming.ConceptCase
+    value:          CamelCase
+
+  #############
+  # _Prefixes #
+  #############
+
+  - key:            readability-identifier-naming.PrivateMemberPrefix
+    value:          _
+  - key:            readability-identifier-naming.ProtectedMemberPrefix
+    value:          _
+  - key:            readability-identifier-naming.TemplateParameterPrefix
+    value:          T
+
+  ##############
+  # UPPER_CASE #
+  ##############
+
+  - key:            readability-identifier-naming.ConstantCase
+    value:          UPPER_CASE
+
+  # Local/Global consts
+  - key:            readability-identifier-naming.GlobalConstantCase
+    value:          UPPER_CASE
+  - key:            readability-identifier-naming.LocalConstantCase
+    value:          UPPER_CASE
+
+  # Constant class
+  - key:            readability-identifier-naming.ClassConstantCase
+    value:          UPPER_CASE
+
+  # Enums/Enum classes
+  - key:            readability-identifier-naming.EnumConstantCase
+    value:          UPPER_CASE  
+  - key:            readability-identifier-naming.EnumClassConstantCase
+    value:          UPPER_CASE 
+
+  #########
+  # OTHER #
+  #########
+
+  # Hungarian notation
+  - key: readability-identifier-naming.HungarianNotation.Global.Enabled
+    value: '0'
+
+
+  # Some settings
+  - key:            readability-identifier-naming.IgnoreMainLikeFunctions
+    value:          '1'
+  - key:            readability-redundant-member-init.IgnoreBaseInCopyConstructors
+    value:          '1'
+  - key:            modernize-use-default-member-init.UseAssignment
+    value:          '1'
