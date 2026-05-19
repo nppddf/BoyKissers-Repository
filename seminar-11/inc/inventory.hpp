@@ -12,37 +12,44 @@
 
 namespace inventory {
 
-class InventoryException : public std::runtime_error {
+class InventoryException: public std::runtime_error
+{
 public:
     explicit InventoryException(const std::string& message);
 };
 
-class SlotOccupiedException : public InventoryException {
+class SlotOccupiedException: public InventoryException
+{
 public:
     explicit SlotOccupiedException(std::size_t index);
 };
 
-class EmptySlotException : public InventoryException {
+class EmptySlotException: public InventoryException
+{
 public:
     explicit EmptySlotException(std::size_t index);
 };
 
-class ItemLimitExceededException : public InventoryException {
+class ItemLimitExceededException: public InventoryException
+{
 public:
     explicit ItemLimitExceededException(std::size_t capacity);
 };
 
-class DurabilityZeroException : public InventoryException {
+class DurabilityZeroException: public InventoryException
+{
 public:
     explicit DurabilityZeroException(std::string_view itemName);
 };
 
-class InvalidItemTypeException : public InventoryException {
+class InvalidItemTypeException: public InventoryException
+{
 public:
     explicit InvalidItemTypeException(std::string_view itemName);
 };
 
-enum class InventoryError {
+enum class InventoryError
+{
     SlotOutOfRange,
     SlotOccupied,
     EmptySlot,
@@ -51,7 +58,8 @@ enum class InventoryError {
 
 std::string toString(InventoryError error);
 
-class Item {
+class Item
+{
 public:
     explicit Item(std::string_view id, double weight);
     virtual ~Item() = default;
@@ -72,7 +80,8 @@ private:
     double weight_;
 };
 
-class Equipment final : public Item {
+class Equipment final: public Item
+{
 public:
     explicit Equipment(std::string_view name, int durability);
     Equipment(std::string_view name, double weight, int durability);
@@ -87,7 +96,8 @@ private:
     int durability_;
 };
 
-class Consumable final : public Item {
+class Consumable final: public Item
+{
 public:
     explicit Consumable(std::string_view name, int healPower);
     Consumable(std::string_view name, double weight, int healPower);
@@ -102,16 +112,16 @@ private:
     bool consumed_ = false;
 };
 
-class Inventory {
+class Inventory
+{
 public:
     explicit Inventory(std::size_t capacity);
 
     [[nodiscard]] std::size_t capacity() const;
     [[nodiscard]] std::size_t size() const;
 
-    std::expected<bool, InventoryError> addItem(
-        std::size_t index,
-        std::unique_ptr<Item> item);
+    std::expected<bool, InventoryError> addItem(std::size_t index,
+                                                std::unique_ptr<Item> item);
     std::expected<bool, InventoryError> addItem(std::unique_ptr<Item> item);
     std::expected<bool, InventoryError> removeItem(std::size_t index);
 
@@ -120,8 +130,8 @@ public:
     void removeItemOrThrow(std::size_t index);
 
     std::optional<std::reference_wrapper<Item>> getSlot(std::size_t index);
-    std::optional<std::reference_wrapper<const Item>> getSlot(
-        std::size_t index) const;
+    std::optional<std::reference_wrapper<const Item>>
+    getSlot(std::size_t index) const;
 
     std::string useSlot(std::size_t index);
     std::string equipSlot(std::size_t index);
@@ -132,4 +142,4 @@ private:
     std::vector<std::unique_ptr<Item>> slots_;
 };
 
-} // namespace inventory
+}  // namespace inventory
