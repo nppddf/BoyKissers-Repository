@@ -2,8 +2,6 @@
 #include "item_factory.hpp"
 
 #include <iostream>
-#include <memory>
-#include <string>
 
 namespace {
 

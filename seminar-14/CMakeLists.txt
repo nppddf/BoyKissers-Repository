@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.14)
 
-project(game_inventory_raii)
+project(type_safe_units)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -8,26 +8,20 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -Werror=return-type")
 
-add_library(game_inventory_raii_lib
-    OBJECT
-        src/inventory.cpp
-        src/item_factory.cpp
-        inc/inventory.hpp
-        inc/item_factory.hpp
-)
-
-target_include_directories(game_inventory_raii_lib
-    PUBLIC
+# Header-only template library — no .cpp sources, so INTERFACE is correct
+add_library(units_lib INTERFACE)
+target_include_directories(units_lib
+    INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}/inc
 )
 
 add_executable(${CMAKE_PROJECT_NAME} src/main.cpp)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE game_inventory_raii_lib)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE units_lib)
 
 option(BUILD_TESTS "Build unit tests" OFF)
 
@@ -41,15 +35,14 @@ if(BUILD_TESTS)
     FetchContent_Declare(
         Catch2
         GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-        GIT_TAG v3.4.0
+        GIT_TAG        v3.4.0
     )
     FetchContent_MakeAvailable(Catch2)
 
-    add_executable(unit_tests tests/test_stat_block.cpp)
-    target_link_libraries(unit_tests PRIVATE game_inventory_raii_lib
-                          Catch2::Catch2WithMain)
+    add_executable(unit_tests tests/test_units.cpp)
+    target_link_libraries(unit_tests PRIVATE units_lib Catch2::Catch2WithMain)
 
-    add_test(NAME InventoryRaiiTests COMMAND unit_tests)
+    add_test(NAME UnitTests COMMAND unit_tests)
 
     add_custom_target(run-tests
         COMMAND $<TARGET_FILE:unit_tests>

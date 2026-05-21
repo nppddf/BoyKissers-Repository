@@ -25,17 +25,17 @@ EmptySlotException::EmptySlotException(std::size_t index)
 
 // ── StatBlock ────────────────────────────────────────────────────────────────
 
-StatBlock::StatBlock(std::size_t size) : _stats(new float[size]()), _size(size)
+StatBlock::StatBlock(std::size_t size): _stats(new float[size]()), _size(size)
 {
-    std::cout << "[LOG] StatBlock alloc: " << _size
-              << " stats @" << static_cast<void*>(_stats) << '\n';
+    std::cout << "[LOG] StatBlock alloc: " << _size << " stats @"
+              << static_cast<void*>(_stats) << '\n';
 }
 
 StatBlock::~StatBlock()
 {
     if(_stats)
-        std::cout << "[DESTROY] StatBlock freed: " << _size
-                  << " stats @" << static_cast<void*>(_stats) << '\n';
+        std::cout << "[DESTROY] StatBlock freed: " << _size << " stats @"
+                  << static_cast<void*>(_stats) << '\n';
     delete[] _stats;
 }
 
@@ -44,8 +44,8 @@ StatBlock::StatBlock(const StatBlock& other)
     : _stats(new float[other._size]), _size(other._size)
 {
     std::copy(other._stats, other._stats + _size, _stats);
-    std::cout << "  [COPY] StatBlock deep copied. Original unchanged."
-              << " @" << static_cast<void*>(_stats) << '\n';
+    std::cout << "  [COPY] StatBlock deep copied. Original unchanged." << " @"
+              << static_cast<void*>(_stats) << '\n';
 }
 
 // Strong exception guarantee: allocate first, then swap into this.
@@ -61,8 +61,8 @@ StatBlock& StatBlock::operator=(const StatBlock& other)
     _stats = newStats;
     _size = other._size;
 
-    std::cout << "  [COPY] StatBlock copy-assigned."
-              << " @" << static_cast<void*>(_stats) << '\n';
+    std::cout << "  [COPY] StatBlock copy-assigned." << " @"
+              << static_cast<void*>(_stats) << '\n';
     return *this;
 }
 
@@ -71,8 +71,8 @@ StatBlock::StatBlock(StatBlock&& other) noexcept
 {
     other._stats = nullptr;
     other._size = 0;
-    std::cout << "  [MOVE] StatBlock moved. Source cleared."
-              << " @" << static_cast<void*>(_stats) << '\n';
+    std::cout << "  [MOVE] StatBlock moved. Source cleared." << " @"
+              << static_cast<void*>(_stats) << '\n';
 }
 
 StatBlock& StatBlock::operator=(StatBlock&& other) noexcept
@@ -86,8 +86,8 @@ StatBlock& StatBlock::operator=(StatBlock&& other) noexcept
     other._stats = nullptr;
     other._size = 0;
 
-    std::cout << "  [MOVE] StatBlock move-assigned. Source cleared."
-              << " @" << static_cast<void*>(_stats) << '\n';
+    std::cout << "  [MOVE] StatBlock move-assigned. Source cleared." << " @"
+              << static_cast<void*>(_stats) << '\n';
     return *this;
 }
 
@@ -99,7 +99,7 @@ std::size_t StatBlock::size() const { return _size; }
 
 // ── Item ─────────────────────────────────────────────────────────────────────
 
-Item::Item(std::string_view name, double weight) : _name(name), _weight(weight)
+Item::Item(std::string_view name, double weight): _name(name), _weight(weight)
 {
 }
 
@@ -109,16 +109,13 @@ double Item::getWeight() const { return _weight; }
 
 // ── Weapon ───────────────────────────────────────────────────────────────────
 
-Weapon::Weapon(std::string_view name, int damage)
-    : Weapon(name, 0.0, damage)
-{
-}
+Weapon::Weapon(std::string_view name, int damage): Weapon(name, 0.0, damage) {}
 
 Weapon::Weapon(std::string_view name, double weight, int damage)
     : Item(name, weight), _damage(damage)
 {
-    std::cout << "[LOG] Weapon created: " << getName()
-              << " (dmg=" << _damage << ")\n";
+    std::cout << "[LOG] Weapon created: " << getName() << " (dmg=" << _damage
+              << ")\n";
 }
 
 int Weapon::getDamage() const { return _damage; }
@@ -135,24 +132,20 @@ std::unique_ptr<Item> Weapon::clone() const
 
 // ── Armor ────────────────────────────────────────────────────────────────────
 
-Armor::Armor(std::string_view name, int defense)
-    : Armor(name, 0.0, defense)
-{
-}
+Armor::Armor(std::string_view name, int defense): Armor(name, 0.0, defense) {}
 
 Armor::Armor(std::string_view name, double weight, int defense)
     : Item(name, weight), _defense(defense)
 {
-    std::cout << "[LOG] Armor created: " << getName()
-              << " (def=" << _defense << ")\n";
+    std::cout << "[LOG] Armor created: " << getName() << " (def=" << _defense
+              << ")\n";
 }
 
 int Armor::getDefense() const { return _defense; }
 
 std::string Armor::equip() const
 {
-    return "Wearing " + getName() +
-           " (def=" + std::to_string(_defense) + ")";
+    return "Wearing " + getName() + " (def=" + std::to_string(_defense) + ")";
 }
 
 std::unique_ptr<Item> Armor::clone() const

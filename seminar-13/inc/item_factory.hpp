@@ -12,11 +12,9 @@ class ItemFactory
 {
 public:
     static std::unique_ptr<Item> createWeapon(std::string_view name,
-                                               double weight,
-                                               int damage);
+                                              double weight, int damage);
     static std::unique_ptr<Item> createArmor(std::string_view name,
-                                              double weight,
-                                              int defense);
+                                             double weight, int defense);
 };
 
 }  // namespace GameInventory
