@@ -17,6 +17,6 @@ public:
                                              double weight, int defense);
 };
 
-}
+}  // namespace GameInventory
 
 #endif

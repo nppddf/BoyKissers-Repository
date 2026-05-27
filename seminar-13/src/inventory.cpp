@@ -239,4 +239,4 @@ void Inventory::recalcStats()
 
 const StatBlock& Inventory::getStatCache() const { return _statCache; }
 
-}
+}  // namespace GameInventory

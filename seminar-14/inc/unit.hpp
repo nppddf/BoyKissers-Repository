@@ -5,46 +5,46 @@
 
 namespace Units {
 
-struct LengthTag {};
-struct MassTag {};
+struct LengthTag
+{
+};
+struct MassTag
+{
+};
 
-template<typename TDim>
-struct DimTraits;
+template <typename TDim> struct DimTraits;
 
-template<>
-struct DimTraits<LengthTag>
+template <> struct DimTraits<LengthTag>
 {
     static constexpr double OTHER_TO_BASE = 0.3048;
     static constexpr double BASE_TO_OTHER = 1.0 / 0.3048;
 };
 
-template<>
-struct DimTraits<MassTag>
+template <> struct DimTraits<MassTag>
 {
     static constexpr double OTHER_TO_BASE = 0.453592;
     static constexpr double BASE_TO_OTHER = 1.0 / 0.453592;
 };
 
-template<typename T>
+template <typename T>
 concept AnyUnit = requires {
     typename T::DimTag;
     typename T::ValueType;
 };
 
-template<typename TValue, typename TDim>
-class Unit
+template <typename TValue, typename TDim> class Unit
 {
     static_assert(std::is_arithmetic_v<TValue>,
                   "Unit value type must be arithmetic.");
 
 public:
-    using DimTag    = TDim;
+    using DimTag = TDim;
     using ValueType = TValue;
 
-    static constexpr TValue TO_BASE   = TValue(1);
+    static constexpr TValue TO_BASE = TValue(1);
     static constexpr TValue FROM_BASE = TValue(1);
 
-    explicit constexpr Unit(TValue value) : _value(value) {}
+    explicit constexpr Unit(TValue value): _value(value) {}
 
     constexpr TValue value() const { return _value; }
 
@@ -56,17 +56,16 @@ private:
     TValue _value;
 };
 
-template<typename TDim>
-class Unit<double, TDim>
+template <typename TDim> class Unit<double, TDim>
 {
 public:
-    using DimTag    = TDim;
+    using DimTag = TDim;
     using ValueType = double;
 
-    static constexpr double TO_BASE   = DimTraits<TDim>::OTHER_TO_BASE;
+    static constexpr double TO_BASE = DimTraits<TDim>::OTHER_TO_BASE;
     static constexpr double FROM_BASE = DimTraits<TDim>::BASE_TO_OTHER;
 
-    explicit constexpr Unit(double value) : _value(value) {}
+    explicit constexpr Unit(double value): _value(value) {}
 
     constexpr double value() const { return _value; }
 
@@ -78,19 +77,18 @@ private:
     double _value;
 };
 
-template<>
-class Unit<double, LengthTag>
+template <> class Unit<double, LengthTag>
 {
 public:
-    using DimTag    = LengthTag;
+    using DimTag = LengthTag;
     using ValueType = double;
 
     static constexpr double FEET_TO_METERS = 0.3048;
     static constexpr double METERS_TO_FEET = 1.0 / 0.3048;
-    static constexpr double TO_BASE        = FEET_TO_METERS;
-    static constexpr double FROM_BASE      = METERS_TO_FEET;
+    static constexpr double TO_BASE = FEET_TO_METERS;
+    static constexpr double FROM_BASE = METERS_TO_FEET;
 
-    explicit constexpr Unit(double value) : _value(value) {}
+    explicit constexpr Unit(double value): _value(value) {}
 
     constexpr double value() const { return _value; }
 
@@ -108,19 +106,18 @@ private:
     double _value;
 };
 
-template<>
-class Unit<double, MassTag>
+template <> class Unit<double, MassTag>
 {
 public:
-    using DimTag    = MassTag;
+    using DimTag = MassTag;
     using ValueType = double;
 
     static constexpr double POUNDS_TO_KG = 0.453592;
     static constexpr double KG_TO_POUNDS = 1.0 / 0.453592;
-    static constexpr double TO_BASE      = POUNDS_TO_KG;
-    static constexpr double FROM_BASE    = KG_TO_POUNDS;
+    static constexpr double TO_BASE = POUNDS_TO_KG;
+    static constexpr double FROM_BASE = KG_TO_POUNDS;
 
-    explicit constexpr Unit(double value) : _value(value) {}
+    explicit constexpr Unit(double value): _value(value) {}
 
     constexpr double value() const { return _value; }
 
@@ -138,7 +135,7 @@ private:
     double _value;
 };
 
-template<AnyUnit UnitTarget, typename TValue, typename TDim>
+template <AnyUnit UnitTarget, typename TValue, typename TDim>
 constexpr auto convert(const Unit<TValue, TDim>& src) -> UnitTarget
 {
     static_assert(
@@ -150,11 +147,11 @@ constexpr auto convert(const Unit<TValue, TDim>& src) -> UnitTarget
         static_cast<typename UnitTarget::ValueType>(baseValue));
 }
 
-using Feet      = Unit<double, LengthTag>;
-using Meters    = Unit<float,  LengthTag>;
-using Pounds    = Unit<double, MassTag>;
-using Kilograms = Unit<float,  MassTag>;
+using Feet = Unit<double, LengthTag>;
+using Meters = Unit<float, LengthTag>;
+using Pounds = Unit<double, MassTag>;
+using Kilograms = Unit<float, MassTag>;
 
-}
+}  // namespace Units
 
 #endif

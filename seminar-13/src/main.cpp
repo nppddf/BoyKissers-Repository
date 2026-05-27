@@ -33,7 +33,7 @@ void printInventory(const GameInventory::Inventory& inv)
     std::cout << "]";
 }
 
-}
+}  // namespace
 
 int main()
 {

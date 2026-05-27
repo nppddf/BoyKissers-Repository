@@ -127,6 +127,6 @@ private:
     std::vector<std::unique_ptr<Item>> _items;
 };
 
-}
+}  // namespace GameInventory
 
 #endif
