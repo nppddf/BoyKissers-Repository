@@ -17,4 +17,4 @@ std::unique_ptr<Item> ItemFactory::createArmor(std::string_view name,
     return std::make_unique<Armor>(name, weight, defense);
 }
 
-}  // namespace GameInventory
+}

@@ -12,8 +12,6 @@
 
 namespace GameInventory {
 
-// ── Exceptions ───────────────────────────────────────────────────────────────
-
 class InventoryException: public std::runtime_error
 {
 public:
@@ -31,10 +29,6 @@ class EmptySlotException: public InventoryException
 public:
     explicit EmptySlotException(std::size_t index);
 };
-
-// ── StatBlock — Rule of 5 ────────────────────────────────────────────────────
-// Owns a heap-allocated float array. Each special member logs its action so
-// copy/move semantics are visible at runtime.
 
 class StatBlock
 {
@@ -55,8 +49,6 @@ private:
     float* _stats;
     std::size_t _size;
 };
-
-// ── Item — abstract base ─────────────────────────────────────────────────────
 
 class Item
 {
@@ -80,8 +72,6 @@ private:
     double _weight;
 };
 
-// ── Weapon ───────────────────────────────────────────────────────────────────
-
 class Weapon final: public Item
 {
 public:
@@ -96,8 +86,6 @@ private:
     int _damage;
 };
 
-// ── Armor ────────────────────────────────────────────────────────────────────
-
 class Armor final: public Item
 {
 public:
@@ -111,10 +99,6 @@ public:
 private:
     int _defense;
 };
-
-// ── Inventory — Rule of 0 ────────────────────────────────────────────────────
-// Move-only by design: unique_ptr makes copy impossible; compiler generates
-// the correct move constructor and destructor without any user-defined code.
 
 class Inventory
 {
@@ -143,6 +127,6 @@ private:
     std::vector<std::unique_ptr<Item>> _items;
 };
 
-}  // namespace GameInventory
+}
 
-#endif  // SEMINAR_13_INVENTORY_HPP
+#endif

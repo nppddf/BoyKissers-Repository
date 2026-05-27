@@ -5,8 +5,6 @@
 
 namespace GameInventory {
 
-// ── Exceptions ───────────────────────────────────────────────────────────────
-
 InventoryException::InventoryException(const std::string& message)
     : std::runtime_error(message)
 {
@@ -23,8 +21,6 @@ EmptySlotException::EmptySlotException(std::size_t index)
 {
 }
 
-// ── StatBlock ────────────────────────────────────────────────────────────────
-
 StatBlock::StatBlock(std::size_t size): _stats(new float[size]()), _size(size)
 {
     std::cout << "[LOG] StatBlock alloc: " << _size << " stats @"
@@ -39,7 +35,6 @@ StatBlock::~StatBlock()
     delete[] _stats;
 }
 
-// Strong exception guarantee: new[] allocates before this is modified.
 StatBlock::StatBlock(const StatBlock& other)
     : _stats(new float[other._size]), _size(other._size)
 {
@@ -48,7 +43,6 @@ StatBlock::StatBlock(const StatBlock& other)
               << static_cast<void*>(_stats) << '\n';
 }
 
-// Strong exception guarantee: allocate first, then swap into this.
 StatBlock& StatBlock::operator=(const StatBlock& other)
 {
     if(this == &other)
@@ -97,8 +91,6 @@ float StatBlock::operator[](std::size_t index) const { return _stats[index]; }
 
 std::size_t StatBlock::size() const { return _size; }
 
-// ── Item ─────────────────────────────────────────────────────────────────────
-
 Item::Item(std::string_view name, double weight): _name(name), _weight(weight)
 {
 }
@@ -106,8 +98,6 @@ Item::Item(std::string_view name, double weight): _name(name), _weight(weight)
 const std::string& Item::getName() const { return _name; }
 
 double Item::getWeight() const { return _weight; }
-
-// ── Weapon ───────────────────────────────────────────────────────────────────
 
 Weapon::Weapon(std::string_view name, int damage): Weapon(name, 0.0, damage) {}
 
@@ -130,8 +120,6 @@ std::unique_ptr<Item> Weapon::clone() const
     return std::make_unique<Weapon>(*this);
 }
 
-// ── Armor ────────────────────────────────────────────────────────────────────
-
 Armor::Armor(std::string_view name, int defense): Armor(name, 0.0, defense) {}
 
 Armor::Armor(std::string_view name, double weight, int defense)
@@ -152,8 +140,6 @@ std::unique_ptr<Item> Armor::clone() const
 {
     return std::make_unique<Armor>(*this);
 }
-
-// ── Inventory ────────────────────────────────────────────────────────────────
 
 Inventory::Inventory(std::size_t capacity)
     : _statCache(STAT_COUNT), _items(capacity)
@@ -253,4 +239,4 @@ void Inventory::recalcStats()
 
 const StatBlock& Inventory::getStatCache() const { return _statCache; }
 
-}  // namespace GameInventory
+}

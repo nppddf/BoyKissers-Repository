@@ -125,9 +125,6 @@ TEST_CASE("Inventory removeItemOrThrow clears slot")
 
 TEST_CASE("Inventory is move-constructible (Rule of 0)")
 {
-    // Rule of 0: no user-defined special members. The compiler generates
-    // move operations via StatBlock's move ctor and vector's move ctor.
-    // Actual copies fail to compile because unique_ptr has no copy ctor.
     static_assert(
         std::is_move_constructible_v<GameInventory::Inventory>,
         "Inventory must be move-constructible");

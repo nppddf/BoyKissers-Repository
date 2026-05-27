@@ -5,8 +5,6 @@
 
 #include <type_traits>
 
-// ── LengthTag full specialisation (Feet) ────────────────────────────────────
-
 TEST_CASE("Feet stores value in feet and converts to metres")
 {
     constexpr Units::Feet feet(100.0);
@@ -39,8 +37,6 @@ TEST_CASE("Feet fromBase creates unit from metres")
     REQUIRE(feet.to_feet() == Catch::Approx(100.0).epsilon(1e-6));
 }
 
-// ── Metres primary template ─────────────────────────────────────────────────
-
 TEST_CASE("Meters primary template stores SI value with factor 1")
 {
     static_assert(Units::Meters::TO_BASE   == 1.0f);
@@ -50,8 +46,6 @@ TEST_CASE("Meters primary template stores SI value with factor 1")
     REQUIRE(static_cast<double>(metres.value()) == Catch::Approx(30.48).epsilon(1e-3));
     REQUIRE(static_cast<double>(metres.toBase()) == Catch::Approx(30.48).epsilon(1e-3));
 }
-
-// ── MassTag full specialisation (Pounds) ─────────────────────────────────────
 
 TEST_CASE("Pounds stores value in pounds and converts to kg")
 {
@@ -76,8 +70,6 @@ TEST_CASE("Kilograms primary template stores SI value with factor 1")
     Units::Kilograms kg(0.453592f);
     REQUIRE(static_cast<double>(kg.value()) == Catch::Approx(0.453592).epsilon(1e-4));
 }
-
-// ── convert<> function ───────────────────────────────────────────────────────
 
 TEST_CASE("convert<Meters> from Feet gives correct SI value")
 {
@@ -113,8 +105,6 @@ TEST_CASE("convert<Pounds> from Kilograms round-trips correctly")
     REQUIRE(backPounds.to_pounds() == Catch::Approx(10.0).epsilon(1e-3));
 }
 
-// ── DimTag type-safety ───────────────────────────────────────────────────────
-
 TEST_CASE("DimTag aliases are correct for each specialisation")
 {
     static_assert(std::is_same_v<Units::Feet::DimTag,      Units::LengthTag>);
@@ -123,8 +113,6 @@ TEST_CASE("DimTag aliases are correct for each specialisation")
     static_assert(std::is_same_v<Units::Kilograms::DimTag, Units::MassTag>);
     SUCCEED("All DimTag aliases verified at compile time");
 }
-
-// ── constexpr end-to-end computation ────────────────────────────────────────
 
 TEST_CASE("Entire conversion pipeline evaluates at compile time")
 {
@@ -140,12 +128,9 @@ TEST_CASE("convert is constexpr: result usable in static_assert")
 {
     constexpr auto metres = Units::convert<Units::Meters>(Units::Feet(1.0));
 
-    // 1 foot ≈ 0.3048 m; float precision may vary slightly
     static_assert(metres.value() > 0.30f && metres.value() < 0.31f);
     SUCCEED("constexpr convert verified");
 }
-
-// ── Partial specialisation for double: factor from DimTraits ─────────────────
 
 TEST_CASE("DimTraits provides correct factors for LengthTag")
 {
